@@ -13,7 +13,7 @@ class Game():
         self.toCall = self.blindsize
 
     def start(self):
-        self.blinds()
+        """self.blinds()
         self.deal()
         self.betround(2)
         self.flop()
@@ -22,6 +22,17 @@ class Game():
         self.betround(0)
         self.river()
         self.betround(0)
+        self.showdown()"""
+        self.betround(2)
+        self.card1 = '2c'
+        self.card2 = 'Kc'
+        self.card3 = 'Qc'
+        self.card4 = 'Tc'
+        self.card5 = 'Jc'
+        self.board.append(self.card1 + self.card2 + self.card3 + self.card4 + self.card5)
+        for player in self.Players:
+            player.cards.append('Js')
+            player.cards.append('3s')
         self.showdown()
     
 
