@@ -1,4 +1,5 @@
 import random
+from packages import hands as ev
 
 class Game():
     def __init__(self, *Players):
@@ -8,6 +9,7 @@ class Game():
                      '2d','3d','4d','5d','6d','7d','8d','9d','Td','Jd','Qd','Kd','Ad',
                      '2c','3c','4c','5c','6c','7c','8c','9c','Tc','Jc','Qc','Kc','Ac',]
         self.board = []
+        self.boardAndPlayer = []
         self.pot = 0
         self.blindsize = 2
         self.toCall = self.blindsize
@@ -24,11 +26,11 @@ class Game():
         self.betround(0)
         self.showdown()"""
         self.betround(2)
-        self.card1 = '2c'
-        self.card2 = 'Kc'
-        self.card3 = 'Qc'
-        self.card4 = 'Tc'
-        self.card5 = 'Jc'
+        self.card1 = 'AC'
+        self.card2 = '2C'
+        self.card3 = '3C'
+        self.card4 = '4C'
+        self.card5 = '5C'
         self.board.append(self.card1 + self.card2 + self.card3 + self.card4 + self.card5)
         for player in self.Players:
             player.cards.append('Js')
@@ -88,6 +90,29 @@ class Game():
         print('The Board is '  + self.card1 + ' ' + self.card2 + ' ' + self.card3 + ' ' + self.card4 + ' ' + self.card5)
         for player in self.active_players:
             print(player.name + ' is in with ' + player.cards[0] + player.cards[1])
+        
+        self.boardAndPlayer = [self.card1 + ' ' + self.card2 + ' ' + self.card3 + ' ' + self.card4 + ' ' + self.card5 + ' ' + player.cards[0] + ' ' + player.cards[1]]
+# 1 = High Card, 2: Pair, 3: Two Pair, 4: Three of a Kinds 5: Straight, 6: Flush, 7: Full-House, 8: Four of a Kind, 9: Straight-Flush, 10: Royal Flush
+        if(ev.determine_hand(self.boardAndPlayer) == 10):
+            print(player.name + ' got a Royal Flush! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 9):
+            print(player.name + ' got a Straight Flush! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 8):
+            print(player.name + ' got a Four of a Kind! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 7):
+            print(player.name + ' got a Full-House! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 6):
+            print(player.name + ' got a Flush! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 5):
+            print(player.name + ' got a Straight! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 4):
+            print(player.name + ' got a Three of a Kinds ! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 3):
+            print(player.name + ' got a Two Pair! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 2):
+            print(player.name + ' got a Pair! ')
+        elif(ev.determine_hand(self.boardAndPlayer) == 1):
+            print(player.name + ' got a High Card! ')
 
     def checkhands(self, _player):
         pass
