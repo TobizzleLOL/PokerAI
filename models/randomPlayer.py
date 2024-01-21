@@ -10,8 +10,6 @@ class Player:
 
     def decide(self, _pot, _toCall):
         match random.randint(0,10):
-            case 0:
-                return 'fold'
             case 1:
                 return 'raise'
             case _:

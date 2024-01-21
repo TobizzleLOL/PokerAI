@@ -90,7 +90,7 @@ class Game():
         winners = []
         print('The Board is '  + str(' '.join(self.board)))
         for player in self.active_players:
-            print(player.name + ' is in with ' + player.cards[0] + player.cards[1])
+            print(player.name + ' is in with ' + player.cards[0] + ' ' + player.cards[1])
             boardAndPlayer = [' '.join(self.board + player.cards)]
             handValue = ev.determine_hand(boardAndPlayer) # 1 = High Card, 2: Pair, 3: Two Pair, 4: Three of a Kinds 5: Straight, 6: Flush, 7: Full-House, 8: Four of a Kind, 9: Straight-Flush, 10: Royal Flush
             if handValue > max:

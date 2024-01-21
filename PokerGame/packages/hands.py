@@ -45,7 +45,7 @@ def determine_hand(hand):
 
     # We have our flushes in here. Any less suits and we don't care.
     # 1 = High Card, 2: Pair, 3:Two Pair, 4: Three of a Kinds 5: Straight, 6: Flush, 7: Full-House, 8: Four of a Kind, 9: Straight-Flush, 10: Royal Flush
-    if max_suit == 5:
+    if max_suit >= 5:
         if is_straight(card_nums):
             if (card_nums[0] == 8 or card_nums[1] == 8 or card_nums[2] == 8): # ROYAL FLUSH!!!
                 return 10
@@ -54,19 +54,20 @@ def determine_hand(hand):
 
     # Checking in on our same cards
     # With a length of two we either have two pair or a full house
-    elif len(same_cards) == 2:
-        if max(same_cards) == 4: # Four of a Kind
-            return 8
-        elif max(same_cards) == 3: # Full House
-            return 7
-    elif len(same_cards) == 3:
-        if max(same_cards) == 3: # Three of a kind
-            return 4
-        else: # Two pair
-            return 3
-    elif len(same_cards) == 4:
-        return 2
-    else: # Garbage hand most likely. But maybe a straight!
-        if is_straight(card_nums):
-            return 5
-        return 1
+    
+    elif same_cards[-1] == 4:
+        return 8                    #four of a kind
+    elif same_cards[-1] == 3:
+        if same_cards[-2] >= 2:
+            return 7                #full house
+        else:
+            return 4                #trips
+    elif same_cards[-1] == 2:
+        if same_cards[-2] == 2:
+            return 3                #two pair
+        else:
+            return 2                #pair
+    elif is_straight(card_nums):
+        return 5                    #straight
+    else:
+        return 1                    #highcard
