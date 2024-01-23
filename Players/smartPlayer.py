@@ -10,11 +10,16 @@ train_lable = []
 test = []
 test_lable = []
 
-
 #train data
 for game in data:
   if game['pots'][1]['num_players'] > 0:
     if game['id'] < 1000:
+      d = game['dealer']
+      p_num = game['num_players']
+      pots_p_num = game['pots'][1]['num_players']
+      pot = game['pots'][1]['size']
+
+      
       cards = game['players'][-1]['pocket_cards'] + [game['board'][0], game['board'][1], game['board'][2]]
 
       possibleCards = ['2s','3s','4s','5s','6s','7s','8s','9s','Ts','Js','Qs','Ks','As',
@@ -24,13 +29,19 @@ for game in data:
 
       cardMetric = []
 
+      cardMetric.append(d)
+      cardMetric.append(p_num)
+      cardMetric.append(pots_p_num)
+      cardMetric.append(pot)
+
+
       for card in possibleCards:
           if card in cards:
             cardMetric.append(1)
           else:
             cardMetric.append(0)
-
       train.append(cardMetric)
+
       match game['players'][-1]['bets'][1]['actions'][-1]:
         case 'b':
           train_lable.append(0)
@@ -42,9 +53,15 @@ for game in data:
           train_lable.append(3)
         case 'k':
           train_lable.append(4)
+        
 
   #testdata
     elif game['id'] > 1000:
+      d = game['dealer']
+      p_num = game['num_players']
+      pots_p_num = game['pots'][1]['num_players']
+      pot = game['pots'][1]['size']
+
       cards = game['players'][-1]['pocket_cards'] + [game['board'][0], game['board'][1], game['board'][2]]
 
       possibleCards = ['2s','3s','4s','5s','6s','7s','8s','9s','Ts','Js','Qs','Ks','As',
@@ -53,6 +70,11 @@ for game in data:
                       '2c','3c','4c','5c','6c','7c','8c','9c','Tc','Jc','Qc','Kc','Ac',]
 
       cardMetric = []
+
+      cardMetric.append(d)
+      cardMetric.append(p_num)
+      cardMetric.append(pots_p_num)
+      cardMetric.append(pot)
 
       for card in possibleCards:
           if card in cards:
@@ -74,11 +96,12 @@ for game in data:
           test_lable.append(3)
         case 'k':
           test_lable.append(4)
+      
+
 
 
 model = tf.keras.models.Sequential([
-      tf.keras.layers.Dense(52),
-      tf.keras.layers.Dense(128, activation='relu'),
+      tf.keras.layers.Dense(56),
       tf.keras.layers.Dense(128, activation='relu'),
       tf.keras.layers.Dense(6, activation='softmax')
 ])
@@ -87,5 +110,7 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(train, train_lable, epochs=15)
+model.fit(train, train_lable, epochs=20)
 model.evaluate(test, test_lable)
+
+model.save("nn.h5")
