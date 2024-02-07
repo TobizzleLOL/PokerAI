@@ -5,7 +5,7 @@ The aim is to create an artificial intelligence, wich should be able to beat bot
 # Documentation
 
 ## The Idea
-We both like playing Poker and we are both interested in AI. So one evening when we were playing Poker, we talked about school and that we need a project idea. Soon we came up with the idea of an AI playing Poker.
+The three of us like playing Poker and we are also interested in AI. So one evening when we were playing Poker, we talked about school and that we need a project idea. Soon we came up with the idea of an AI playing Poker.
 
 ## V. 0.1 The Game of Poker   Jan 18, 2024
 The first step towards our goal is to create an enviroment where we can simulate Poker games. This enviroment should be able to use different Player models such as a random Player as well as our AI.
@@ -25,7 +25,7 @@ One still missing feature with hand detection is to distiguish between a good an
 This is adressed is issue #5.
 
 ## V. 0.3 The AI   Jan 23, 2024
-We collected training data https://allenfrostline.com/blog/texas-holdem-series-2/. With this we were able to create the first version of the AI, wich is right about 35% of the time. 
+For creating our neural network, we chose the open-source library Keras, which is part of the Tensorflow API. To use it, we collected training data at https://allenfrostline.com/blog/texas-holdem-series-2/. With this we were able to create the first version of the AI, which is right about 35% of the time. 
 
 This is implemented in commit 9190ebbc64736b03060dd749dfc72a74152baca0.
 
@@ -34,4 +34,10 @@ That is better than guessing, but not that much better, so there is a lot to imp
 ## V. 0.4 The Tragedy of getting Predictions   Jan 23, 2024 
 After tryning to use our AI model to evaluate hands, we realised that the output was the same everytime. It learned nothing at all. The AI poker player raised every single hand we gave him, resulting in a 66% accuracy when giving winning hands.
 After trying for some time we came to the conclusion that the dataset we used was unbalanced, had a bad structure and lacks pre-flop situations. Becuase of that we will now focus on other training methods for some time.
+
+## V. 0.5 Another Try
+We had the idea of using AI to evaluate the hand and chosing a move based on that, rather than choosing a move upfront. We used a dataset provided by the UC Irvine Machine Learning Repository (https://archive.ics.uci.edu/dataset/158/poker+hand). We used the same open-source library as in previous versions, but adjusted the layer atrributes. After a few hours of testing, the final version was right about 99.9% of the time when presented with 5 cards. This is more than we hoped for, but because it only takes 5 cards as input, we will need to create 3 more models for other gamestates.
+
+This is implemented in commit 765fe6fa92b2453a8b349b28e9c5a75f391ddacc.
+
 
