@@ -11,7 +11,7 @@ p1 = sP.Player('Stewie')
 p2 = sP.Player('Brian')
 p3 = sP.Player('Peter')
 p4 = sP.Player('Lois')
-p5 = user.Player('Tobi')
+p5 = user.Player('Tobi')        #this is the user!
 
 
 #creating the game object
@@ -23,6 +23,6 @@ p2.cards = ['6s', '7s']
 p3.cards = ['8s', '9s']
 p4.cards = ['2d', '3d']
 p5.cards = ['Qc', 'Kh']
-Game.board = ['4s', '2h', 'As']
+Game.board = ['4s', '2h', 'As']     #sadly only 3 cards because theres no model for turn scenario 
 
 Game.start()

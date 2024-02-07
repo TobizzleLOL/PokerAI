@@ -40,4 +40,7 @@ We had the idea of using AI to evaluate the hand and chosing a move based on tha
 
 This is implemented in commit 765fe6fa92b2453a8b349b28e9c5a75f391ddacc.
 
+## V. 1.0 Working 
+This is the First version which can be seen as a functional product. In the current state one Player can play against 4 AI players. But they only work for flop scenarios. That means that we cant go on after the first 3 cards. 
+
 
