@@ -1,4 +1,4 @@
-import json
+import pandas as pd
 import tensorflow as tf
 import numpy as np
 
@@ -10,65 +10,35 @@ class Player:
         self.bet = 0
         self.active = True
 
-    def decide(self, _pot, _numPlayers, *_cards):
+    def decide(self, _cards, _stage):
         data = []
 
-        possibleDecisions = ['c', 'c', 'r', 'f', 'c']
+        card_value = dict(zip('A 2 3 4 5 6 7 8 9 T J Q K'.split(), range(13)))
+        suit_value = dict(zip('c h s d'.split(), range(4)))
 
-        possibleCards = ['2s','3s','4s','5s','6s','7s','8s','9s','Ts','Js','Qs','Ks','As',
-                        '2h','3h','4h','5h','6h','7h','8h','9h','Th','Jh','Qh','Kh','Ah',
-                        '2d','3d','4d','5d','6d','7d','8d','9d','Td','Jd','Qd','Kd','Ad',
-                        '2c','3c','4c','5c','6c','7c','8c','9c','Tc','Jc','Qc','Kc','Ac',]
+        for card in _cards:
+            c, s = list(card) # Splits the cards
+            
+            c = card_value[c]+1 #Converted Cards to value e.g [0, 1, 2, 3, 12]
+            s = suit_value[s]+1
+            data.append(s)
+            data.append(c)
+        print(data)
 
-        cardMetric = []
-
-        cardMetric.append(0)
-        cardMetric.append(4)
-        cardMetric.append(_numPlayers)
-        cardMetric.append(_pot)
-
-
-        for card in possibleCards:
-            if card in _cards:
-                cardMetric.append(1)
-            else:
-                cardMetric.append(0)
-        data.append(cardMetric)
-
-
-        model = tf.keras.models.load_model('Models\\nn.h5')
-        prediction = model.predict(data)
-        print(possibleDecisions[np.argmax(prediction[0])])
-
-
-with open("trainingData/hands_valid.json", "r") as read_file:
-    data = json.load(read_file)
-for game in data:
-    if game['id'] > 1000:
-        d = game['dealer']
-        p_num = game['num_players']
-        pots_p_num = game['pots'][1]['num_players']
-        pot = game['pots'][1]['size']
-
-        cards = game['players'][-1]['pocket_cards'] + [game['board'][0], game['board'][1], game['board'][2]]
-
-        possibleCards = ['2s','3s','4s','5s','6s','7s','8s','9s','Ts','Js','Qs','Ks','As',
-                        '2h','3h','4h','5h','6h','7h','8h','9h','Th','Jh','Qh','Kh','Ah',
-                        '2d','3d','4d','5d','6d','7d','8d','9d','Td','Jd','Qd','Kd','Ad',
-                        '2c','3c','4c','5c','6c','7c','8c','9c','Tc','Jc','Qc','Kc','Ac',]
-
-        cardMetric = []
-
-        cardMetric.append(d)
-        cardMetric.append(p_num)
-        cardMetric.append(pots_p_num)
-        cardMetric.append(pot)
-
-        for card in possibleCards:
-            if card in cards:
-                cardMetric.append(1)
-            else:
-                cardMetric.append(0)
+        model = tf.keras.models.load_model('Models\model.keras')
+        prediction = model.predict([data])
+        hand_value = np.argmax(prediction)
+        if _stage == 'flop':
+            match hand_value:
+                case 0:
+                    return 'fold'
+                case 1:
+                    return 'call'
+                case 1:
+                    return 'call'
+                case _:
+                    return 'raise'
+            
 
 p1 = Player('Tobi')
-p1.decide(1000, 3, ['4d', 'Qh', '2c', '7h', 'Ts'])
+print(p1.decide(['Qh', '4d', 'Td', '3s', 'Kc'], 'flop'))
