@@ -178,7 +178,7 @@ class Game():
 
     #queries a players decision
     def act(self, _player):
-        match _player.decide(self.pot, self.toCall): 
+        match _player.decide('flop', self.board): 
             case 'call':
                 self.calling(_player)
             case 'fold':
