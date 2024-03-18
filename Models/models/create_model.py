@@ -3,12 +3,12 @@ import tensorflow as tf
 from keras.utils import to_categorical
 
 
-train_data = pd.read_csv('trainingData\poker_data.csv',
+train_data = pd.read_csv('trainingData\flop_data.csv',
                     header=None,
                     names=["suite1","value1","suite2","value2","suite3","value3","suite4","value4","suite5","value5","hand"])
 train_data.sample(10)
 
-test_data = pd.read_csv('trainingData\poker_data.csv',
+test_data = pd.read_csv('trainingData\flop_data.csv',
                     header=None,
                     names=["suite1","value1","suite2","value2","suite3","value3","suite4","value4","suite5","value5","hand"])
 test_data.sample(10)

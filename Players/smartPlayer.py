@@ -27,7 +27,7 @@ class Player:
             data.append(c)      #appending all the elements for example data=[1, 3, 4, 2, 10, 2, 11, 1, 6, 4]
         
         if _stage == 'flop':
-            model = tf.keras.models.load_model('Models\model_flop.keras')   #loading the model
+            model = tf.keras.models.load_model('Models\models\model.keras')   #loading the model
             prediction = model.predict([data])                              #evaluating position via AI model                     
             hand_value = np.argmax(prediction)
             match hand_value:
@@ -39,7 +39,7 @@ class Player:
                     return 'raise'
                 
         if _stage == 'turn':
-            model = tf.keras.models.load_model('Models\model_flop.keras') #still WIP there is no model for turn scenarions yet
+            model = tf.keras.models.load_model('Models\models\model.keras') #still WIP there is no model for turn scenarions yet
             prediction = model.predict([data])
             hand_value = np.argmax(prediction)
             match hand_value:
