@@ -1,0 +1,12 @@
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(52, input_dim=10, kernel_initializer='normal', activation='relu'),
+    tf.keras.layers.Dense(10, kernel_initializer='normal', activation='relu'),
+    tf.keras.layers.Dense(10, kernel_initializer='normal', activation='relu'),
+    tf.keras.layers.Dense(10,activation='softmax')
+    ])
+
+model.compile(
+    loss='categorical_crossentropy', 
+    optimizer='adam', 
+    metrics=['accuracy']
+    )

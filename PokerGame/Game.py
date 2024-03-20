@@ -131,6 +131,10 @@ class Game():
 
     #cycles through every player until everyone either folds or calls
     def betround(self, start):
+        for player in self.Players:
+            self.pot += player.bet
+            player.bet = 0
+            
         self.active_players = [player for player in self.Players if  player.active]
         #first round
         for player in self.active_players:
@@ -150,10 +154,6 @@ class Game():
             for player in self.active_players:
                 if player.bet is not self.toCall:
                     self.act(player)
-
-        for player in self.Players:
-            self.pot += player.bet
-            player.bet = 0
 
         print('The currnet Pot is worth ' + str(self.pot))
         
